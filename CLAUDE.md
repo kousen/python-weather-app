@@ -22,7 +22,7 @@ This file contains important context and development information for AI assistan
 1. **Single Unit System Approach**
    - **Decision**: Use OpenWeather API's native unit parameters (`metric`/`imperial`) instead of manual conversion
    - **Rationale**: Ensures all units (temperature, wind speed, pressure) are correctly converted by the API
-   - **Implementation Status**: UI links implemented (`?units=metric|imperial`), backend conversion partially complete
+   - **Implementation Status**: Complete - Page reload approach with proper unit parameter handling
 
 2. **City Disambiguation Strategy**
    - **Problem**: API often returns duplicate or multiple cities with same name
@@ -122,11 +122,10 @@ pytest test_main.py::TestCityWeather -v   # Weather functionality
 ## 🚨 Known Issues & Considerations
 
 ### Current Limitations
-1. **Temperature Unit Toggle**: Frontend links implemented but backend unit conversion incomplete
-2. **API Rate Limits**: Free tier limits could be hit with heavy usage
-3. **iPad Layout**: Some spacing issues on tablet devices (noted in README)
-4. **Icon Fallbacks**: Limited fallback handling for unusual weather conditions
-5. **No Caching**: Each request hits the API (could benefit from Redis/memory cache)
+1. **API Rate Limits**: Free tier limits could be hit with heavy usage
+2. **iPad Layout**: Some spacing issues on tablet devices (noted in README)
+3. **Icon Fallbacks**: Limited fallback handling for unusual weather conditions
+4. **No Caching**: Each request hits the API (could benefit from Redis/memory cache)
 
 ### Security Considerations
 - **Input Validation**: Currently regex-based, could be enhanced with more sophisticated validation
@@ -175,7 +174,7 @@ if not city:
 ### API Usage Evolution
 - **Original**: Manual Fahrenheit conversion (incomplete - missed wind speed)
 - **Intermediate**: Dual API calls for metric + imperial (caused rate limiting)
-- **Current**: Single API call with unit parameter + page reload for unit switching
+- **Current**: Single API call with unit parameter + page reload for unit switching (COMPLETE)
 
 ## 💡 Future Development Guidelines
 

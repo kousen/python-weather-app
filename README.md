@@ -133,7 +133,7 @@ pytest test_main.py::TestHomePage -v           # Home page features
 ### Version 2.0 Updates
 - **Smart city disambiguation** - Handles cities with identical names
 - **Enhanced weather details** - Added humidity, feels-like temp, sunrise/sunset
-- **Temperature unit toggle** - Page-reload approach using API unit parameters (in progress)
+- **Temperature unit toggle** - Complete implementation using API unit parameters with proper wind speed conversion
 - **Loading states** - Visual feedback during API calls
 - **Mobile optimization** - Improved responsive design
 - **Security hardening** - Input validation and HTTPS enforcement
@@ -167,7 +167,7 @@ Environment variables required in production:
 
 ## 🐛 Known Issues
 
-- **Temperature unit toggle** - Implementation partially complete (UI links exist, backend needs completion)
+- **API optimization** - Reduced API calls by 50% through efficient unit parameter usage
 - iPad layout could be further optimized (spacing improvements needed)  
 - Weather icons could have better fallbacks for unusual conditions
 
