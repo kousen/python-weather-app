@@ -17,8 +17,20 @@
                     <h1> {{ city_name }} </h1>
                     <h2> {{ current_date }} </h2>
                     <div class="temp-toggle">
-                        <a href="?units=metric" id="celsius-btn" class="temp-btn{% if units == 'metric' %} active{% endif %}">°C</a>
-                        <a href="?units=imperial" id="fahrenheit-btn" class="temp-btn{% if units == 'imperial' %} active{% endif %}">°F</a>
+                        <form method="post" action="{{ url_for('get_weather_by_coords') }}" style="display: inline;">
+                            <input type="hidden" name="lat" value="{{ lat }}">
+                            <input type="hidden" name="lon" value="{{ lon }}">
+                            <input type="hidden" name="display_name" value="{{ city_name }}">
+                            <input type="hidden" name="units" value="metric">
+                            <button type="submit" id="celsius-btn" class="temp-btn{% if units == 'metric' %} active{% endif %}">°C</button>
+                        </form>
+                        <form method="post" action="{{ url_for('get_weather_by_coords') }}" style="display: inline;">
+                            <input type="hidden" name="lat" value="{{ lat }}">
+                            <input type="hidden" name="lon" value="{{ lon }}">
+                            <input type="hidden" name="display_name" value="{{ city_name }}">
+                            <input type="hidden" name="units" value="imperial">
+                            <button type="submit" id="fahrenheit-btn" class="temp-btn{% if units == 'imperial' %} active{% endif %}">°F</button>
+                        </form>
                     </div>
                 </div>
                 <div class="daily-forecast">

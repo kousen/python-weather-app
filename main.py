@@ -120,7 +120,7 @@ def get_weather(city):
             lon = locations[0]['lon']
             city_display_name = locations[0]['display_name']
         else:
-            return render_template("select_city.html", locations=locations)
+            return render_template("select_city.html", locations=locations, units=units)
     else:
         # Single result - proceed as before
         location = location_data[0]
@@ -190,7 +190,7 @@ def get_weather(city):
 
     return render_template("city.html", city_name=city_display_name, current_date=current_date, current_temp=current_temp,
                            current_weather=current_weather, min_temp=min_temp, max_temp=max_temp, wind_speed=wind_speed,
-                           humidity=humidity, feels_like=feels_like, units=units,
+                           humidity=humidity, feels_like=feels_like, units=units, lat=lat, lon=lon,
                            sunrise_time=sunrise_time, sunset_time=sunset_time,
                            five_day_temp_list=five_day_temp_list,
                            five_day_weather_list=five_day_weather_list, five_day_dates_list=five_day_dates_list)
@@ -266,7 +266,7 @@ def get_weather_by_coords():
 
     return render_template("city.html", city_name=city_display_name, current_date=current_date, current_temp=current_temp,
                            current_weather=current_weather, min_temp=min_temp, max_temp=max_temp, wind_speed=wind_speed,
-                           humidity=humidity, feels_like=feels_like, units=units,
+                           humidity=humidity, feels_like=feels_like, units=units, lat=lat, lon=lon,
                            sunrise_time=sunrise_time, sunset_time=sunset_time,
                            five_day_temp_list=five_day_temp_list,
                            five_day_weather_list=five_day_weather_list, five_day_dates_list=five_day_dates_list)
