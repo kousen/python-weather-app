@@ -11,7 +11,7 @@ A modern Flask-based weather web application that provides comprehensive weather
 - **Smart duplicate removal** - eliminates duplicate city entries from API responses
 
 ### Enhanced User Experience
-- **Temperature unit toggle** - Switch between Celsius and Fahrenheit (includes proper wind speed conversion: m/s ↔ mph)
+- **Temperature unit toggle** - Switch between Celsius and Fahrenheit via page reload (ensures proper unit conversion for temperature AND wind speed: m/s ↔ mph)
 - **Comprehensive weather details**:
   - Current temperature with "feels like" temperature
   - Min/max temperatures for the day
@@ -133,7 +133,7 @@ pytest test_main.py::TestHomePage -v           # Home page features
 ### Version 2.0 Updates
 - **Smart city disambiguation** - Handles cities with identical names
 - **Enhanced weather details** - Added humidity, feels-like temp, sunrise/sunset
-- **Temperature unit toggle** - Proper metric/imperial conversion via API
+- **Temperature unit toggle** - Page-reload approach using API unit parameters (in progress)
 - **Loading states** - Visual feedback during API calls
 - **Mobile optimization** - Improved responsive design
 - **Security hardening** - Input validation and HTTPS enforcement
@@ -167,7 +167,8 @@ Environment variables required in production:
 
 ## 🐛 Known Issues
 
-- iPad layout could be further optimized (spacing improvements needed)
+- **Temperature unit toggle** - Implementation partially complete (UI links exist, backend needs completion)
+- iPad layout could be further optimized (spacing improvements needed)  
 - Weather icons could have better fallbacks for unusual conditions
 
 ## 📸 Screenshots
