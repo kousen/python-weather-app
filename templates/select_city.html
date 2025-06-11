@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+        <title>Select City</title>
+    </head>
+    <body>
+        <main> 
+            <div class="container">
+                <div class="change-button">
+                    <img class="chevron-icon" src="/static/assets/chevron-left.png" alt="">
+                    <a href="{{ url_for('home')}}"> SEARCH AGAIN </a>
+                </div>
+                <div class="city-header">
+                    <h1>Multiple cities found</h1>
+                    <h2>Please select one:</h2>
+                </div>
+                <div class="city-selection">
+                    {% for location in locations %}
+                    <form action="{{ url_for('get_weather_by_coords') }}" method="post" class="city-option" onsubmit="showLoading(this)">
+                        <input type="hidden" name="lat" value="{{ location.lat }}">
+                        <input type="hidden" name="lon" value="{{ location.lon }}">
+                        <input type="hidden" name="display_name" value="{{ location.display_name }}">
+                        <button type="submit" class="city-button">
+                            <h3>{{ location.name }}</h3>
+                            <p class="city-details">
+                                {% if location.state %}{{ location.state }}, {% endif %}
+                                {{ location.country }}
+                            </p>
+                            <div class="button-spinner" style="display: none;">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+                    </form>
+                    {% endfor %}
+                </div>
+                <div class="footer">
+                    <a href="https://rachanahegde.squarespace.com/"> © Rachana Hegde </a>
+                </div>
+            </div>
+        </main>
+        <script>
+            function showLoading(form) {
+                const button = form.querySelector('.city-button');
+                const spinner = button.querySelector('.button-spinner');
+                spinner.style.display = 'block';
+                button.style.opacity = '0.7';
+                button.disabled = true;
+                
+                return true; // Allow form submission to proceed
+            }
+        </script>
+    </body>
+</html>

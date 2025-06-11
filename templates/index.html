@@ -17,8 +17,11 @@
                 </div>
                 <div class="search-bar"> 
                     <img class="search-icon" src="/static/assets/search.png" alt="">
-                    <form class="search" action="" autocomplete="off" method="post">
-                        <input type="text" name="search" id="search" tabindex="1" placeholder="Search for a city">
+                    <form class="search" action="" autocomplete="off" method="post" id="search-form">
+                        <input type="text" name="search" id="search" tabindex="1" placeholder="Search for a city" required>
+                        <div class="loading-spinner" id="loading-spinner" style="display: none;">
+                            <div class="spinner"></div>
+                        </div>
                     </form>
                 </div>
                 <div class="footer">
@@ -26,5 +29,17 @@
                 </div>
             </div>
         </main>
+        <script>
+            // Loading state for search form
+            document.getElementById('search-form').addEventListener('submit', function() {
+                const spinner = document.getElementById('loading-spinner');
+                const searchInput = document.getElementById('search');
+                
+                if (searchInput.value.trim()) {
+                    spinner.style.display = 'block';
+                    searchInput.style.paddingRight = '50px';
+                }
+            });
+        </script>
     </body>
 </html>

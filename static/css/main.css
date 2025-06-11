@@ -164,6 +164,27 @@ img {
 	outline: none;
 }
 
+.loading-spinner {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #9DACDB;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 /* City Page Text */
 
 .city-header {
@@ -379,4 +400,209 @@ img {
 	#error-text {
 	    font-size: 40px;
 	}
+}
+
+/* City Selection */
+
+.city-selection {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.city-option {
+    width: 100%;
+}
+
+.city-button {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.city-button:hover {
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.city-button h3 {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.city-details {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #666;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin: 0;
+}
+
+.button-spinner {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+.button-spinner .spinner {
+    width: 16px;
+    height: 16px;
+}
+
+/* Temperature Toggle */
+
+.temp-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 15px;
+}
+
+.temp-btn {
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid #9DACDB;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.temp-btn.active {
+    background: #9DACDB;
+    color: white;
+    border-color: #9DACDB;
+}
+
+.temp-btn:hover {
+    background: #9DACDB;
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Weather Details */
+
+.weather-details {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 400px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.detail-row:last-child {
+    margin-bottom: 0;
+}
+
+.detail-item {
+    text-align: center;
+    flex: 1;
+}
+
+.detail-item h4 {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.detail-item p {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+    letter-spacing: normal;
+}
+
+/* Mobile Responsiveness */
+
+@media (max-width: 768px) {
+    .temp-toggle {
+        gap: 3px;
+        margin-top: 10px;
+    }
+    
+    .temp-btn {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+    
+    .weather-details {
+        margin: 15px 20px;
+        padding: 15px;
+        max-width: none;
+    }
+    
+    .detail-item h4 {
+        font-size: 12px;
+    }
+    
+    .detail-item p {
+        font-size: 16px;
+    }
+    
+    .city-selection {
+        padding: 15px;
+        gap: 10px;
+    }
+    
+    .city-button {
+        padding: 15px;
+    }
+    
+    .city-button h3 {
+        font-size: 20px;
+    }
+    
+    .city-details {
+        font-size: 14px;
+    }
+    
+    .search-bar {
+        width: 320px;
+    }
+    
+    .main-header h1 {
+        font-size: 60px;
+        padding-top: 15%;
+    }
+    
+    .city-header h1 {
+        font-size: 45px;
+    }
+    
+    .city-header h2 {
+        font-size: 28px;
+    }
 }
