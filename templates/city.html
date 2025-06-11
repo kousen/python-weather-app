@@ -17,30 +17,30 @@
                     <h1> {{ city_name }} </h1>
                     <h2> {{ current_date }} </h2>
                     <div class="temp-toggle">
-                        <a href="?units=metric" id="celsius-btn" class="temp-btn active">°C</a>
-                        <a href="?units=imperial" id="fahrenheit-btn" class="temp-btn">°F</a>
+                        <a href="?units=metric" id="celsius-btn" class="temp-btn{% if units == 'metric' %} active{% endif %}">°C</a>
+                        <a href="?units=imperial" id="fahrenheit-btn" class="temp-btn{% if units == 'imperial' %} active{% endif %}">°F</a>
                     </div>
                 </div>
                 <div class="daily-forecast">
-                    <p id="current-temp" data-celsius="{{ current_temp }}" data-fahrenheit="{{ current_temp_f }}"> {{ current_temp }}ºC </p>
+                    <p id="current-temp"> {{ current_temp }}º{% if units == 'imperial' %}F{% else %}C{% endif %} </p>
                     <div class="daily-section">
                         <img class="weather-icon" src="/static/assets/{{ current_weather.lower() }}.png" alt="">
                         <p class="forecast-text"> {{ current_weather }} </p>
                     </div>  
                     <div class="daily-section">
                         <img class="weather-icon" src="/static/assets/thermometer.png" alt="">
-                        <p class="forecast-text temp-range" data-min-c="{{ min_temp }}" data-max-c="{{ max_temp }}" data-min-f="{{ min_temp_f }}" data-max-f="{{ max_temp_f }}"> {{min_temp }}° - {{ max_temp }}° </p>
+                        <p class="forecast-text temp-range"> {{min_temp }}° - {{ max_temp }}° </p>
                     </div> 
                     <div class="daily-section">
                         <img class="weather-icon" src="/static/assets/wind.png" alt="">
-                        <p class="forecast-text"> {{ wind_speed }} m/s </p>
+                        <p class="forecast-text"> {{ wind_speed }} {% if units == 'imperial' %}mph{% else %}m/s{% endif %} </p>
                     </div>
                 </div>
                 <div class="weather-details">
                     <div class="detail-row">
                         <div class="detail-item">
                             <h4>Feels like</h4>
-                            <p class="feels-like-temp" data-celsius="{{ feels_like }}" data-fahrenheit="{{ feels_like_f }}">{{ feels_like }}°C</p>
+                            <p class="feels-like-temp">{{ feels_like }}°{% if units == 'imperial' %}F{% else %}C{% endif %}</p>
                         </div>
                         <div class="detail-item">
                             <h4>Humidity</h4>
@@ -64,27 +64,27 @@
                     <div class="forecast-item">
                         <p> {{ five_day_dates_list[0] }} </p>
                         <img class="weather-icon" src="/static/assets/{{ current_weather.lower() }}.png" alt="">
-                        <p class="forecast-temp" data-celsius="{{ current_temp }}" data-fahrenheit="{{ current_temp_f }}"> {{ current_temp }}º </p>
+                        <p class="forecast-temp"> {{ current_temp }}º </p>
                     </div>
                     <div class="forecast-item">
                         <p> {{ five_day_dates_list[1] }} </p>
                         <img class="weather-icon" src="/static/assets/{{five_day_weather_list[1].lower()}}.png" alt="">
-                        <p class="forecast-temp" data-celsius="{{ five_day_temp_list[1] }}" data-fahrenheit="{{ five_day_temp_list_f[1] }}"> {{ five_day_temp_list[1] }}º </p>
+                        <p class="forecast-temp"> {{ five_day_temp_list[1] }}º </p>
                     </div>
                     <div class="forecast-item">
                         <p> {{ five_day_dates_list[2] }} </p>
                         <img class="weather-icon" src="/static/assets/{{five_day_weather_list[2].lower()}}.png" alt="">
-                        <p class="forecast-temp" data-celsius="{{ five_day_temp_list[2] }}" data-fahrenheit="{{ five_day_temp_list_f[2] }}"> {{ five_day_temp_list[2] }}º </p>
+                        <p class="forecast-temp"> {{ five_day_temp_list[2] }}º </p>
                     </div>
                     <div class="forecast-item">
                         <p> {{five_day_dates_list[3]}} </p>
                         <img class="weather-icon" src="/static/assets/{{five_day_weather_list[3].lower()}}.png" alt="">
-                        <p class="forecast-temp" data-celsius="{{ five_day_temp_list[3] }}" data-fahrenheit="{{ five_day_temp_list_f[3] }}"> {{ five_day_temp_list[3] }}º </p>
+                        <p class="forecast-temp"> {{ five_day_temp_list[3] }}º </p>
                     </div>
                     <div class="forecast-item">
                         <p> {{five_day_dates_list[4]}} </p>
                         <img class="weather-icon" src="/static/assets/{{five_day_weather_list[4].lower()}}.png" alt="">
-                        <p class="forecast-temp" data-celsius="{{ five_day_temp_list[4] }}" data-fahrenheit="{{ five_day_temp_list_f[4] }}"> {{ five_day_temp_list[4] }}º </p>
+                        <p class="forecast-temp"> {{ five_day_temp_list[4] }}º </p>
                     </div>
                 </div>
                 <div class="footer">
@@ -92,44 +92,5 @@
                 </div>
             </div>
         </main>
-        <script>
-            // Temperature unit toggle functionality
-            const celsiusBtn = document.getElementById('celsius-btn');
-            const fahrenheitBtn = document.getElementById('fahrenheit-btn');
-            
-            function toggleTemperature(unit) {
-                const currentTemp = document.getElementById('current-temp');
-                const tempRange = document.querySelector('.temp-range');
-                const forecastTemps = document.querySelectorAll('.forecast-temp');
-                const feelsLikeTemp = document.querySelector('.feels-like-temp');
-                
-                if (unit === 'celsius') {
-                    celsiusBtn.classList.add('active');
-                    fahrenheitBtn.classList.remove('active');
-                    
-                    currentTemp.textContent = currentTemp.dataset.celsius + 'ºC';
-                    tempRange.textContent = tempRange.dataset.minC + '° - ' + tempRange.dataset.maxC + '°';
-                    feelsLikeTemp.textContent = feelsLikeTemp.dataset.celsius + '°C';
-                    
-                    forecastTemps.forEach(temp => {
-                        temp.textContent = temp.dataset.celsius + 'º';
-                    });
-                } else {
-                    fahrenheitBtn.classList.add('active');
-                    celsiusBtn.classList.remove('active');
-                    
-                    currentTemp.textContent = currentTemp.dataset.fahrenheit + 'ºF';
-                    tempRange.textContent = tempRange.dataset.minF + '° - ' + tempRange.dataset.maxF + '°';
-                    feelsLikeTemp.textContent = feelsLikeTemp.dataset.fahrenheit + '°F';
-                    
-                    forecastTemps.forEach(temp => {
-                        temp.textContent = temp.dataset.fahrenheit + 'º';
-                    });
-                }
-            }
-            
-            celsiusBtn.addEventListener('click', () => toggleTemperature('celsius'));
-            fahrenheitBtn.addEventListener('click', () => toggleTemperature('fahrenheit'));
-        </script>
     </body>
 </html>

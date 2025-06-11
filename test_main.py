@@ -58,58 +58,31 @@ class TestCityWeather:
         
         # Mock weather data helper function
         mock_weather_data.return_value = {
-            'metric': {
-                'current': {
-                    'main': {
-                        'temp': 15.5,
-                        'temp_min': 13.0,
-                        'temp_max': 18.0,
-                        'humidity': 65,
-                        'feels_like': 16.2
-                    },
-                    'weather': [{'main': 'Clouds'}],
-                    'wind': {'speed': 3.5},
-                    'sys': {
-                        'sunrise': 1609459200,
-                        'sunset': 1609488000
-                    }
+            'current': {
+                'main': {
+                    'temp': 15.5,
+                    'temp_min': 13.0,
+                    'temp_max': 18.0,
+                    'humidity': 65,
+                    'feels_like': 16.2
                 },
-                'forecast': {
-                    'list': [
-                        {'dt_txt': '2024-01-01 12:00:00', 'main': {'temp': 16.0}, 'weather': [{'main': 'Clouds'}]},
-                        {'dt_txt': '2024-01-02 12:00:00', 'main': {'temp': 17.0}, 'weather': [{'main': 'Rain'}]},
-                        {'dt_txt': '2024-01-03 12:00:00', 'main': {'temp': 14.0}, 'weather': [{'main': 'Clear'}]},
-                        {'dt_txt': '2024-01-04 12:00:00', 'main': {'temp': 15.0}, 'weather': [{'main': 'Clouds'}]},
-                        {'dt_txt': '2024-01-05 12:00:00', 'main': {'temp': 16.0}, 'weather': [{'main': 'Rain'}]},
-                    ]
+                'weather': [{'main': 'Clouds'}],
+                'wind': {'speed': 3.5},
+                'sys': {
+                    'sunrise': 1609459200,
+                    'sunset': 1609488000
                 }
             },
-            'imperial': {
-                'current': {
-                    'main': {
-                        'temp': 59.9,
-                        'temp_min': 55.4,
-                        'temp_max': 64.4,
-                        'humidity': 65,
-                        'feels_like': 61.2
-                    },
-                    'weather': [{'main': 'Clouds'}],
-                    'wind': {'speed': 3.5},
-                    'sys': {
-                        'sunrise': 1609459200,
-                        'sunset': 1609488000
-                    }
-                },
-                'forecast': {
-                    'list': [
-                        {'dt_txt': '2024-01-01 12:00:00', 'main': {'temp': 60.8}, 'weather': [{'main': 'Clouds'}]},
-                        {'dt_txt': '2024-01-02 12:00:00', 'main': {'temp': 62.6}, 'weather': [{'main': 'Rain'}]},
-                        {'dt_txt': '2024-01-03 12:00:00', 'main': {'temp': 57.2}, 'weather': [{'main': 'Clear'}]},
-                        {'dt_txt': '2024-01-04 12:00:00', 'main': {'temp': 59.0}, 'weather': [{'main': 'Clouds'}]},
-                        {'dt_txt': '2024-01-05 12:00:00', 'main': {'temp': 60.8}, 'weather': [{'main': 'Rain'}]},
-                    ]
-                }
-            }
+            'forecast': {
+                'list': [
+                    {'dt_txt': '2024-01-01 12:00:00', 'main': {'temp': 16.0}, 'weather': [{'main': 'Clouds'}]},
+                    {'dt_txt': '2024-01-02 12:00:00', 'main': {'temp': 17.0}, 'weather': [{'main': 'Rain'}]},
+                    {'dt_txt': '2024-01-03 12:00:00', 'main': {'temp': 14.0}, 'weather': [{'main': 'Clear'}]},
+                    {'dt_txt': '2024-01-04 12:00:00', 'main': {'temp': 15.0}, 'weather': [{'main': 'Clouds'}]},
+                    {'dt_txt': '2024-01-05 12:00:00', 'main': {'temp': 16.0}, 'weather': [{'main': 'Rain'}]},
+                ]
+            },
+            'units': 'metric'
         }
         
         response = client.get('/London')
@@ -162,58 +135,31 @@ class TestCityWeather:
         """Test weather display when selecting from multiple cities"""
         # Mock weather data helper function
         mock_weather_data.return_value = {
-            'metric': {
-                'current': {
-                    'main': {
-                        'temp': 20.5,
-                        'temp_min': 18.0,
-                        'temp_max': 23.0,
-                        'humidity': 70,
-                        'feels_like': 21.1
-                    },
-                    'weather': [{'main': 'Clear'}],
-                    'wind': {'speed': 2.5},
-                    'sys': {
-                        'sunrise': 1609459200,
-                        'sunset': 1609488000
-                    }
+            'current': {
+                'main': {
+                    'temp': 20.5,
+                    'temp_min': 18.0,
+                    'temp_max': 23.0,
+                    'humidity': 70,
+                    'feels_like': 21.1
                 },
-                'forecast': {
-                    'list': [
-                        {'dt_txt': '2024-01-01 12:00:00', 'main': {'temp': 21.0}, 'weather': [{'main': 'Clear'}]},
-                        {'dt_txt': '2024-01-02 12:00:00', 'main': {'temp': 22.0}, 'weather': [{'main': 'Clear'}]},
-                        {'dt_txt': '2024-01-03 12:00:00', 'main': {'temp': 19.0}, 'weather': [{'main': 'Clouds'}]},
-                        {'dt_txt': '2024-01-04 12:00:00', 'main': {'temp': 20.0}, 'weather': [{'main': 'Clear'}]},
-                        {'dt_txt': '2024-01-05 12:00:00', 'main': {'temp': 21.0}, 'weather': [{'main': 'Clear'}]},
-                    ]
+                'weather': [{'main': 'Clear'}],
+                'wind': {'speed': 2.5},
+                'sys': {
+                    'sunrise': 1609459200,
+                    'sunset': 1609488000
                 }
             },
-            'imperial': {
-                'current': {
-                    'main': {
-                        'temp': 68.9,
-                        'temp_min': 64.4,
-                        'temp_max': 73.4,
-                        'humidity': 70,
-                        'feels_like': 70.0
-                    },
-                    'weather': [{'main': 'Clear'}],
-                    'wind': {'speed': 2.5},
-                    'sys': {
-                        'sunrise': 1609459200,
-                        'sunset': 1609488000
-                    }
-                },
-                'forecast': {
-                    'list': [
-                        {'dt_txt': '2024-01-01 12:00:00', 'main': {'temp': 69.8}, 'weather': [{'main': 'Clear'}]},
-                        {'dt_txt': '2024-01-02 12:00:00', 'main': {'temp': 71.6}, 'weather': [{'main': 'Clear'}]},
-                        {'dt_txt': '2024-01-03 12:00:00', 'main': {'temp': 66.2}, 'weather': [{'main': 'Clouds'}]},
-                        {'dt_txt': '2024-01-04 12:00:00', 'main': {'temp': 68.0}, 'weather': [{'main': 'Clear'}]},
-                        {'dt_txt': '2024-01-05 12:00:00', 'main': {'temp': 69.8}, 'weather': [{'main': 'Clear'}]},
-                    ]
-                }
-            }
+            'forecast': {
+                'list': [
+                    {'dt_txt': '2024-01-01 12:00:00', 'main': {'temp': 21.0}, 'weather': [{'main': 'Clear'}]},
+                    {'dt_txt': '2024-01-02 12:00:00', 'main': {'temp': 22.0}, 'weather': [{'main': 'Clear'}]},
+                    {'dt_txt': '2024-01-03 12:00:00', 'main': {'temp': 19.0}, 'weather': [{'main': 'Clouds'}]},
+                    {'dt_txt': '2024-01-04 12:00:00', 'main': {'temp': 20.0}, 'weather': [{'main': 'Clear'}]},
+                    {'dt_txt': '2024-01-05 12:00:00', 'main': {'temp': 21.0}, 'weather': [{'main': 'Clear'}]},
+                ]
+            },
+            'units': 'metric'
         }
         
         response = client.post('/weather', data={

@@ -135,59 +135,42 @@ def get_weather(city):
             display_parts.append(location['country'])
         city_display_name = ', '.join(display_parts)
 
-    # Get weather data in both units
+    # Get weather data in specified units
     try:
-        weather_data = get_weather_data(lat, lon)
+        weather_data = get_weather_data(lat, lon, units)
     except Exception:
         return redirect(url_for("error"))
 
-    # Extract metric data
-    metric_current = weather_data['metric']['current']
-    metric_forecast = weather_data['metric']['forecast']
-    
-    # Extract imperial data  
-    imperial_current = weather_data['imperial']['current']
-    imperial_forecast = weather_data['imperial']['forecast']
+    # Extract weather data
+    current_weather_data = weather_data['current']
+    forecast_data = weather_data['forecast']
 
-    # Get current weather data (metric)
-    current_temp = round(metric_current['main']['temp'])
-    current_weather = metric_current['weather'][0]['main']
-    min_temp = round(metric_current['main']['temp_min'])
-    max_temp = round(metric_current['main']['temp_max'])
-    wind_speed = metric_current['wind']['speed']
-    humidity = metric_current['main']['humidity']
-    feels_like = round(metric_current['main']['feels_like'])
-    
-    # Get imperial equivalents
-    current_temp_f = round(imperial_current['main']['temp'])
-    min_temp_f = round(imperial_current['main']['temp_min'])
-    max_temp_f = round(imperial_current['main']['temp_max'])
-    feels_like_f = round(imperial_current['main']['feels_like'])
+    # Get current weather data
+    current_temp = round(current_weather_data['main']['temp'])
+    current_weather = current_weather_data['weather'][0]['main']
+    min_temp = round(current_weather_data['main']['temp_min'])
+    max_temp = round(current_weather_data['main']['temp_max'])
+    wind_speed = current_weather_data['wind']['speed']
+    humidity = current_weather_data['main']['humidity']
+    feels_like = round(current_weather_data['main']['feels_like'])
     
     # Get sunrise/sunset times
-    sunrise_timestamp = metric_current['sys']['sunrise']
-    sunset_timestamp = metric_current['sys']['sunset']
+    sunrise_timestamp = current_weather_data['sys']['sunrise']
+    sunset_timestamp = current_weather_data['sys']['sunset']
     sunrise_time = datetime.datetime.fromtimestamp(sunrise_timestamp).strftime('%H:%M')
     sunset_time = datetime.datetime.fromtimestamp(sunset_timestamp).strftime('%H:%M')
 
     # Process 5-day forecast data
     five_day_temp_list = []
-    five_day_temp_list_f = []
     five_day_weather_list = []
     
-    # Extract metric forecast
-    for item in metric_forecast.get('list', []):
+    # Extract forecast
+    for item in forecast_data.get('list', []):
         if '12:00:00' in item.get('dt_txt', ''):
             if 'main' in item and 'temp' in item['main']:
                 five_day_temp_list.append(round(item['main']['temp']))
             if 'weather' in item and item['weather'] and 'main' in item['weather'][0]:
                 five_day_weather_list.append(item['weather'][0]['main'])
-    
-    # Extract imperial forecast
-    for item in imperial_forecast.get('list', []):
-        if '12:00:00' in item.get('dt_txt', ''):
-            if 'main' in item and 'temp' in item['main']:
-                five_day_temp_list_f.append(round(item['main']['temp']))
     
     # Ensure we have at least some forecast data (be more flexible)
     if len(five_day_temp_list) < 1 or len(five_day_weather_list) < 1:
@@ -197,8 +180,6 @@ def get_weather(city):
     # Pad lists to ensure we have 5 items (repeat last item if needed)
     while len(five_day_temp_list) < 5:
         five_day_temp_list.append(five_day_temp_list[-1] if five_day_temp_list else 0)
-    while len(five_day_temp_list_f) < 5:
-        five_day_temp_list_f.append(five_day_temp_list_f[-1] if five_day_temp_list_f else 32)
     while len(five_day_weather_list) < 5:
         five_day_weather_list.append(five_day_weather_list[-1] if five_day_weather_list else 'Clear')
 
@@ -209,10 +190,9 @@ def get_weather(city):
 
     return render_template("city.html", city_name=city_display_name, current_date=current_date, current_temp=current_temp,
                            current_weather=current_weather, min_temp=min_temp, max_temp=max_temp, wind_speed=wind_speed,
-                           current_temp_f=current_temp_f, min_temp_f=min_temp_f, max_temp_f=max_temp_f,
-                           humidity=humidity, feels_like=feels_like, feels_like_f=feels_like_f,
+                           humidity=humidity, feels_like=feels_like, units=units,
                            sunrise_time=sunrise_time, sunset_time=sunset_time,
-                           five_day_temp_list=five_day_temp_list, five_day_temp_list_f=five_day_temp_list_f,
+                           five_day_temp_list=five_day_temp_list,
                            five_day_weather_list=five_day_weather_list, five_day_dates_list=five_day_dates_list)
 
 
@@ -222,6 +202,7 @@ def get_weather_by_coords():
     lat = request.form.get("lat")
     lon = request.form.get("lon")
     city_display_name = request.form.get("display_name")
+    units = request.form.get("units", "metric")  # Get units from form, default to metric
     
     if not lat or not lon or not city_display_name:
         return redirect(url_for("error"))
@@ -230,59 +211,42 @@ def get_weather_by_coords():
     today = datetime.datetime.now()
     current_date = today.strftime("%A, %B %d")
     
-    # Get weather data in both units
+    # Get weather data in specified units
     try:
-        weather_data = get_weather_data(lat, lon)
+        weather_data = get_weather_data(lat, lon, units)
     except Exception:
         return redirect(url_for("error"))
 
-    # Extract metric data
-    metric_current = weather_data['metric']['current']
-    metric_forecast = weather_data['metric']['forecast']
-    
-    # Extract imperial data  
-    imperial_current = weather_data['imperial']['current']
-    imperial_forecast = weather_data['imperial']['forecast']
+    # Extract weather data
+    current_weather_data = weather_data['current']
+    forecast_data = weather_data['forecast']
 
-    # Get current weather data (metric)
-    current_temp = round(metric_current['main']['temp'])
-    current_weather = metric_current['weather'][0]['main']
-    min_temp = round(metric_current['main']['temp_min'])
-    max_temp = round(metric_current['main']['temp_max'])
-    wind_speed = metric_current['wind']['speed']
-    humidity = metric_current['main']['humidity']
-    feels_like = round(metric_current['main']['feels_like'])
-    
-    # Get imperial equivalents
-    current_temp_f = round(imperial_current['main']['temp'])
-    min_temp_f = round(imperial_current['main']['temp_min'])
-    max_temp_f = round(imperial_current['main']['temp_max'])
-    feels_like_f = round(imperial_current['main']['feels_like'])
+    # Get current weather data
+    current_temp = round(current_weather_data['main']['temp'])
+    current_weather = current_weather_data['weather'][0]['main']
+    min_temp = round(current_weather_data['main']['temp_min'])
+    max_temp = round(current_weather_data['main']['temp_max'])
+    wind_speed = current_weather_data['wind']['speed']
+    humidity = current_weather_data['main']['humidity']
+    feels_like = round(current_weather_data['main']['feels_like'])
     
     # Get sunrise/sunset times
-    sunrise_timestamp = metric_current['sys']['sunrise']
-    sunset_timestamp = metric_current['sys']['sunset']
+    sunrise_timestamp = current_weather_data['sys']['sunrise']
+    sunset_timestamp = current_weather_data['sys']['sunset']
     sunrise_time = datetime.datetime.fromtimestamp(sunrise_timestamp).strftime('%H:%M')
     sunset_time = datetime.datetime.fromtimestamp(sunset_timestamp).strftime('%H:%M')
 
     # Process 5-day forecast data
     five_day_temp_list = []
-    five_day_temp_list_f = []
     five_day_weather_list = []
     
-    # Extract metric forecast
-    for item in metric_forecast.get('list', []):
+    # Extract forecast
+    for item in forecast_data.get('list', []):
         if '12:00:00' in item.get('dt_txt', ''):
             if 'main' in item and 'temp' in item['main']:
                 five_day_temp_list.append(round(item['main']['temp']))
             if 'weather' in item and item['weather'] and 'main' in item['weather'][0]:
                 five_day_weather_list.append(item['weather'][0]['main'])
-    
-    # Extract imperial forecast
-    for item in imperial_forecast.get('list', []):
-        if '12:00:00' in item.get('dt_txt', ''):
-            if 'main' in item and 'temp' in item['main']:
-                five_day_temp_list_f.append(round(item['main']['temp']))
     
     # Ensure we have at least some forecast data (be more flexible)
     if len(five_day_temp_list) < 1 or len(five_day_weather_list) < 1:
@@ -292,8 +256,6 @@ def get_weather_by_coords():
     # Pad lists to ensure we have 5 items (repeat last item if needed)
     while len(five_day_temp_list) < 5:
         five_day_temp_list.append(five_day_temp_list[-1] if five_day_temp_list else 0)
-    while len(five_day_temp_list_f) < 5:
-        five_day_temp_list_f.append(five_day_temp_list_f[-1] if five_day_temp_list_f else 32)
     while len(five_day_weather_list) < 5:
         five_day_weather_list.append(five_day_weather_list[-1] if five_day_weather_list else 'Clear')
 
@@ -304,10 +266,9 @@ def get_weather_by_coords():
 
     return render_template("city.html", city_name=city_display_name, current_date=current_date, current_temp=current_temp,
                            current_weather=current_weather, min_temp=min_temp, max_temp=max_temp, wind_speed=wind_speed,
-                           current_temp_f=current_temp_f, min_temp_f=min_temp_f, max_temp_f=max_temp_f,
-                           humidity=humidity, feels_like=feels_like, feels_like_f=feels_like_f,
+                           humidity=humidity, feels_like=feels_like, units=units,
                            sunrise_time=sunrise_time, sunset_time=sunset_time,
-                           five_day_temp_list=five_day_temp_list, five_day_temp_list_f=five_day_temp_list_f,
+                           five_day_temp_list=five_day_temp_list,
                            five_day_weather_list=five_day_weather_list, five_day_dates_list=five_day_dates_list)
 
 
