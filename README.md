@@ -2,6 +2,8 @@
 
 A modern Flask-based weather web application that provides comprehensive weather forecasts for any city worldwide. Built with a focus on user experience, security, and responsive design.
 
+> **Note**: This is an enhanced fork of the original project with additional features including temperature unit conversion, improved city selection, comprehensive testing, and performance optimizations.
+
 ## ✨ Features
 
 ### Core Functionality
@@ -143,6 +145,14 @@ pytest test_main.py::TestHomePage -v           # Home page features
 
 ### Local Development
 ```bash
+# Set up virtual environment (recommended)
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the application
 python main.py  # Runs on localhost:5000 with debug mode
 ```
 
@@ -167,9 +177,8 @@ Environment variables required in production:
 
 ## 🐛 Known Issues
 
-- **API optimization** - Reduced API calls by 50% through efficient unit parameter usage
 - iPad layout could be further optimized (spacing improvements needed)  
-- Weather icons could have better fallbacks for unusual conditions
+- Weather icons could have better fallbacks for unusual weather conditions
 
 ## 📸 Screenshots
 
